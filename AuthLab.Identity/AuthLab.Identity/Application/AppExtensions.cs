@@ -1,20 +1,16 @@
 ﻿using AuthLab.Identity.DataAccess;
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace AuthLab.Identity.Application;
 
 public static class AppExtensions
 {
-    public static void DoMigrationIfApplied(this IServiceProvider serviceProvider)
+    public static AppSettings ApplyAppSettings(this WebApplicationBuilder builder)
     {
-        using var scope = serviceProvider.CreateScope();
-        var services = scope.ServiceProvider;
-
-        var appSettings = services.GetRequiredService<IConfiguration>().Get<AppSettings>()!;
-        if (appSettings.DatabaseSettings.ApplyMigration)
-        {
-            var context = services.GetRequiredService<AuthDbContext>();
-            context.Database.Migrate();
-        }
+        var appSettings = builder.Configuration.Get<AppSettings>()!;
+        builder.Services.AddSingleton(appSettings);
+        return appSettings;
     }
 }
