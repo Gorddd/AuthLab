@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthLab.DataAccess.Migrations
 {
     [DbContext(typeof(UsersDbContext))]
-    [Migration("20230923164132_InitUsersDbContext")]
-    partial class InitUsersDbContext
+    [Migration("20230923175109_InitDbContext")]
+    partial class InitDbContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,9 @@ namespace AuthLab.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Username")
+                        .IsUnique();
+
                     b.ToTable("Users");
 
                     b.HasData(
@@ -52,7 +55,7 @@ namespace AuthLab.DataAccess.Migrations
                         {
                             Id = 1,
                             HasPasswordRequirements = false,
-                            HashedPassword = "$MYHASH$V1$10000$veD0HAGFAF+Id4HKYNKzMpXiV1oqSrKknc960XHonnZ9o00y",
+                            HashedPassword = "$MYHASH$V1$10000$Zstnozw1TjU/AsiTp4WC2Ee6I7QFjy0JqbTYyeIL+ZUAlpQw",
                             IsBlocked = false,
                             Role = "Admin",
                             Username = "Admin"

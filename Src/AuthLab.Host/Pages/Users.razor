@@ -1,6 +1,27 @@
-﻿@page "/Users"
+﻿@page "/users"
 
 <PageTitle>Пользователи</PageTitle>
 
 <h3>Список пользователей</h3>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Блокировка</th>
+            <th>Особый требования пароля</th>
+            <th>Роль</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in _users)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.IsBlocked</td>
+                <td>@user.HasPasswordRequirements</td>
+                <td>@user.Role</td>
+            </tr>
+        }
+    </tbody>
+</table>

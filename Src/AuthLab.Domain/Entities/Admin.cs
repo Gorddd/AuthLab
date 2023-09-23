@@ -35,4 +35,18 @@ public class Admin
         }
         return new AdminResponse { IsSuccess = false, Message = $"Пользователь {username} не найден" };
     }
+
+    public async Task<IEnumerable<UserInformation>> GetUsers()
+    {
+        return await _users.GetUsers();
+    }
+
+    public async Task<AdminResponse> AddNewUser(UserInformation user)
+    {
+        if (await _users.IsThereUser(user.Username))
+            return new AdminResponse { IsSuccess = false, Message = $"Пользователь с именем {user.Username} уже существует!" };
+
+        await _users.AddUser(user);
+        return new AdminResponse { IsSuccess = true };
+    }
 }

@@ -42,6 +42,9 @@ namespace AuthLab.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Username")
+                        .IsUnique();
+
                     b.ToTable("Users");
 
                     b.HasData(
@@ -49,7 +52,7 @@ namespace AuthLab.DataAccess.Migrations
                         {
                             Id = 1,
                             HasPasswordRequirements = false,
-                            HashedPassword = "$MYHASH$V1$10000$veD0HAGFAF+Id4HKYNKzMpXiV1oqSrKknc960XHonnZ9o00y",
+                            HashedPassword = "$MYHASH$V1$10000$Zstnozw1TjU/AsiTp4WC2Ee6I7QFjy0JqbTYyeIL+ZUAlpQw",
                             IsBlocked = false,
                             Role = "Admin",
                             Username = "Admin"

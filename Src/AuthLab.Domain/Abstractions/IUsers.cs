@@ -9,4 +9,8 @@ public interface IUsers
     public Task<bool> IsThereUser(string username);
 
     public Task UpdateUser(UserInformation userInformation);
+
+    public Task<IEnumerable<UserInformation>> GetUsers();
+
+    public Task AddUser(UserInformation newUsers);
 }

@@ -5,7 +5,7 @@
 namespace AuthLab.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitUsersDbContext : Migration
+    public partial class InitDbContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +30,13 @@ namespace AuthLab.DataAccess.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "HasPasswordRequirements", "HashedPassword", "IsBlocked", "Role", "Username" },
-                values: new object[] { 1, false, "$MYHASH$V1$10000$veD0HAGFAF+Id4HKYNKzMpXiV1oqSrKknc960XHonnZ9o00y", false, "Admin", "Admin" });
+                values: new object[] { 1, false, "$MYHASH$V1$10000$Zstnozw1TjU/AsiTp4WC2Ee6I7QFjy0JqbTYyeIL+ZUAlpQw", false, "Admin", "Admin" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Username",
+                table: "Users",
+                column: "Username",
+                unique: true);
         }
 
         /// <inheritdoc />

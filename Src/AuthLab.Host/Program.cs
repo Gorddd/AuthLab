@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using AuthLab.DataAccess.EfCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 var appSettings = builder.SetAppSettings();
@@ -12,14 +13,28 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
-builder.Services.AddMapper();
+builder.Services
+    .AddMapper()
+    .AddDomain()
+    .AddSecurity()
+    .AddDataAccess();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/login";
+        options.AccessDeniedPath = "/accessdenied";
+    });
+builder.Services.AddAuthorization();
 
 builder.Services.AddDbContext<UsersDbContext>(opt => 
     opt.UseSqlite(appSettings.DatabaseSettings.ConnectionString));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseAuthentication();
+app.UseAuthorization();
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
