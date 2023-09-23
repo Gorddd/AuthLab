@@ -38,7 +38,7 @@ public class Defender
             if (!_securityService.VerifyPassword(validationInformation.Password, user.HashedPassword))
                 return failedResponse;
 
-            return new DefenderResponse { IsSuccess = true };
+            return new DefenderResponse { IsSuccess = true, UserInformation = user };
         }
         return failedResponse;
     }

@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Components.Web;
 using AuthLab.DataAccess.EfCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using AuthLab.Host.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 var appSettings = builder.SetAppSettings();
@@ -12,6 +15,8 @@ var appSettings = builder.SetAppSettings();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<ProtectedSessionStorage>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 builder.Services
     .AddMapper()
@@ -19,26 +24,14 @@ builder.Services
     .AddSecurity()
     .AddDataAccess();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/login";
-        options.AccessDeniedPath = "/accessdenied";
-    });
-builder.Services.AddAuthorization();
-
 builder.Services.AddDbContext<UsersDbContext>(opt => 
     opt.UseSqlite(appSettings.DatabaseSettings.ConnectionString));
 
 var app = builder.Build();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
