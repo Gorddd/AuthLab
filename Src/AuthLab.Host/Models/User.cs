@@ -5,7 +5,9 @@ namespace AuthLab.Host.Models;
 public class User
 {
     [Required]
-    public string? Username { get; init; }
+    public string? Username { get; set; }
+
     [Required]
-    public string? Password { get; set; } = null!;
+    [DataType(DataType.Password)]
+    public string? Password { get; set; }
 }

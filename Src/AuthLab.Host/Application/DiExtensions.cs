@@ -1,5 +1,4 @@
 ﻿using AuthLab.DataAccess.Implementations;
-using AuthLab.DataAccess.Mapping;
 using AuthLab.Domain.Abstractions;
 using AuthLab.Domain.Entities;
 using AuthLab.Security.Implementations;
@@ -11,9 +10,12 @@ public static class DiExtensions
 {
     public static IServiceCollection AddMapper(this IServiceCollection services)
     {
-        var servicesAssembly = Assembly.Load(typeof(UsersProfile).Assembly.GetName());
-        services.AddAutoMapper(servicesAssembly);
+        var dataAccess = Assembly.Load(typeof(DataAccess.Mapping.UsersProfile).Assembly.GetName());
+        var host = Assembly.Load(typeof(Host.Mapping.UsersProfile).Assembly.GetName());
 
+        services
+            .AddAutoMapper(dataAccess)
+            .AddAutoMapper(host);
         return services;
     }
 

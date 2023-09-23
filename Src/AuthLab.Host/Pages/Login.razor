@@ -1,7 +1,29 @@
 ﻿@page "/login"
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+
+<PageTitle>Login</PageTitle>
 
 <h3>Login</h3>
 
-@code {
-
+<EditForm Model="@User" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>
+        Name:<br />
+        <InputText id="username" @bind-Value="User.Username" />
+    </p>
+    <p>
+        Password:<br />
+        <InputText type="password" id="password" @bind-Value="User.Password" />
+    </p>
+    <button type="submit">Submit</button>
+</EditForm>
+@if (!(DefenderResponse?.IsSuccess ?? true))
+{
+    <div>
+        <p>
+            You've got an error
+        </p>
+    </div>
 }
