@@ -3,7 +3,7 @@
 @inject AuthenticationStateProvider authStateProvider;
 @inject NavigationManager navManager;
 
-<PageTitle>AuthLab.Host</PageTitle>
+<PageTitle>AuthLab</PageTitle>
 
 <div class="page">
     <div class="sidebar">
@@ -12,7 +12,12 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <AuthorizeView>
+                <Authorized>
+                    <lable>@context.User.Identity!.Name</lable>
+                </Authorized>
+            </AuthorizeView>
+            <a href="/about">About</a>
             <AuthorizeView>
                 <Authorized>
                     <a @onclick="Logout" href="javascript:void(0)">Logout</a>

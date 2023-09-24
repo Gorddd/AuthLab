@@ -11,6 +11,13 @@ public class PasswordValidator : IPasswordValidator
 {
     public bool ValidatePassword(string password)
     {
-        return true;
+        //Содержит цифру и знак препинания
+        var punctuationMarks = new[]
+        {
+            '.', ',', ':', ';', '?', '\'', '-', '(', ')', '/', '\"', '!'
+        };
+
+        var result = password.Any(char.IsNumber) && password.Any(c => punctuationMarks.Any(p => p == c));
+        return result;
     }
 }

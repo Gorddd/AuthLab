@@ -23,7 +23,7 @@ public partial class Login
 
     [Inject] AuthenticationStateProvider _authProvider { get; set; } = null!;
 
-    async void Submit()
+    async Task Submit()
     {
         DefenderResponse = await _defender.VerifyUser(_mapper.Map<UserValidationInformation>(User));
         if (!DefenderResponse.IsSuccess)

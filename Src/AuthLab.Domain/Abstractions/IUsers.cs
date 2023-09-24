@@ -13,4 +13,6 @@ public interface IUsers
     public Task<IEnumerable<UserInformation>> GetUsers();
 
     public Task AddUser(UserInformation newUsers);
+
+    public Task DeleteUser(string username);
 }

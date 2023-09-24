@@ -1,0 +1,54 @@
+﻿@using AuthLab.Domain.Entities;
+@using AuthLab.Domain.Responses;
+@using AuthLab.Host.Models;
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+
+
+<h3>Добавление нового пользователя</h3>
+
+<EditForm Model="@User" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>
+        Name: <br />
+        <InputText id="username" @bind-Value="User.Username" />
+    </p>
+    <p>
+        Password:<br />
+        <InputText type="password" id="password" @bind-Value="User.Password" />
+    </p>
+    <button type="submit">Submit</button>
+</EditForm>
+
+@if (!(AdminResponse?.IsSuccess ?? true))
+{
+    <div>
+        <p>
+            @AdminResponse.Message
+        </p>
+    </div>
+}
+
+@code {
+    User User { get; set; } = new();
+
+    [Inject] Admin AdminService { get; set; } = null!;
+
+    [Inject] NavigationManager NavigationManager { get; set; } = null!;
+
+
+    AdminResponse? AdminResponse { get; set; }
+
+    async void Submit()
+    {
+        AdminResponse = await AdminService.AddNewUser(new UserValidationInformation
+            {
+                Username = User.Username!,
+                Password = User.Password!
+            });
+
+        if (AdminResponse.IsSuccess)
+            NavigationManager.NavigateTo("/users", true);
+    }
+}

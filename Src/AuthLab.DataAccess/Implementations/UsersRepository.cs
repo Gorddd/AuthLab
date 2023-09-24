@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using AuthLab.DataAccess.Models;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace AuthLab.DataAccess.Implementations;
 
@@ -22,17 +23,20 @@ public class UsersRepository : IUsers
     public async Task AddUser(UserInformation newUser)
     {
         await _context.Users.AddAsync(_mapper.Map<UserInformation, User>(newUser));
+        await _context.SaveChangesAsync();
     }
 
     public async Task<UserInformation> GetUserByName(string username)
     {
         return await _context.Users.ProjectTo<UserInformation>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
             .SingleAsync(u => u.Username == username);
     }
 
     public async Task<IEnumerable<UserInformation>> GetUsers()
     {
         return await _context.Users.ProjectTo<UserInformation>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
             .ToListAsync();
     }
 
@@ -42,9 +46,22 @@ public class UsersRepository : IUsers
             .AnyAsync(u => u.Username == username);
     }
 
+    public async Task DeleteUser(string username)
+    {
+        var userToDelete = await _context.Users.SingleAsync(u => u.Username == username);
+        _context.Users.Remove(userToDelete);
+
+        await _context.SaveChangesAsync();
+    }
+
     public async Task UpdateUser(UserInformation userInformation)
     {
-        _context.Users.Update(_mapper.Map<UserInformation, User>(userInformation));
+        var mappedUser = _mapper.Map<UserInformation, User>(userInformation);
+        var userToUpdate = await _context.Users
+            .SingleAsync(u => u.Username == mappedUser.Username);
+        mappedUser.Id = userToUpdate.Id;
+
+        _context.Entry(userToUpdate).CurrentValues.SetValues(mappedUser);
 
         await _context.SaveChangesAsync();
     }

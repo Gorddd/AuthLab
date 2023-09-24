@@ -5,11 +5,13 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthLab.Host", "AuthLab.Host\AuthLab.Host.csproj", "{5AC4EA27-F9EE-46B4-8518-EB1B29361CFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthLab.Domain", "AuthLab.Domain\AuthLab.Domain.csproj", "{B7303AB2-3277-4803-8A73-5BC1EE699676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthLab.Domain", "AuthLab.Domain\AuthLab.Domain.csproj", "{B7303AB2-3277-4803-8A73-5BC1EE699676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthLab.Security", "AuthLab.Security\AuthLab.Security.csproj", "{30DB1C80-8CEB-4789-8017-0A95233B2246}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthLab.Security", "AuthLab.Security\AuthLab.Security.csproj", "{30DB1C80-8CEB-4789-8017-0A95233B2246}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthLab.DataAccess", "AuthLab.DataAccess\AuthLab.DataAccess.csproj", "{BFD33A33-92D8-4C75-90B2-2BA1490912C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthLab.DataAccess", "AuthLab.DataAccess\AuthLab.DataAccess.csproj", "{BFD33A33-92D8-4C75-90B2-2BA1490912C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthLab.Tests", "AuthLab.Tests\AuthLab.Tests.csproj", "{B2E6D64F-E5D9-431E-966C-C44C9EE6E21C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{BFD33A33-92D8-4C75-90B2-2BA1490912C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFD33A33-92D8-4C75-90B2-2BA1490912C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFD33A33-92D8-4C75-90B2-2BA1490912C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E6D64F-E5D9-431E-966C-C44C9EE6E21C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E6D64F-E5D9-431E-966C-C44C9EE6E21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E6D64F-E5D9-431E-966C-C44C9EE6E21C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E6D64F-E5D9-431E-966C-C44C9EE6E21C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

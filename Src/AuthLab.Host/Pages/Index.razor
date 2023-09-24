@@ -5,15 +5,22 @@
 <AuthorizeView>
     <Authorized>
         <h1>Привет @context.User.Identity!.Name!</h1>
-        <p>Хочешь сменить пароль?</p>
+        <br />
+        <p>Сменить пароль</p>
+        <button @onclick="ChangePassRedirect">Изменить пароль</button>
     </Authorized>
     <NotAuthorized>
         <h1>Привет гость!</h1>
+        <br />
+        <p>Вы не авторизованы</p>
     </NotAuthorized>
 </AuthorizeView>
 
-<h1>Hello, world!</h1>
+@code{
+    [Inject] NavigationManager navigationManager { get; set; } = null!;
 
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+    void ChangePassRedirect()
+    {
+        navigationManager.NavigateTo("/changepassword", true);
+    }
+}

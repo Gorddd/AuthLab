@@ -10,7 +10,7 @@
         <tr>
             <th>Имя</th>
             <th>Блокировка</th>
-            <th>Особый требования пароля</th>
+            <th>Особые требования пароля</th>
             <th>Роль</th>
         </tr>
     </thead>
@@ -22,7 +22,36 @@
                 <td>@user.IsBlocked</td>
                 <td>@user.HasPasswordRequirements</td>
                 <td>@user.Role</td>
+                <td>
+                    <button @onclick="(e => SetBlockingValue(user.Username, !user.IsBlocked))">
+                        @(user.IsBlocked ? "Разблокировать" : "Заблокировать")
+                    </button>
+                </td>
+                <td>
+                    <button @onclick="(e => SetPasswordRequirements(user.Username, !user.HasPasswordRequirements))">
+                        @(user.HasPasswordRequirements ? "Убрать особые требования пароля" : "Установить особые требования пароля")
+                    </button>
+                </td>
+                <td>
+                    @if (user.Username != "Admin")
+                    {
+                        <button @onclick="(e => DeleteUser(user.Username))">
+                            Удалить пользователя
+                        </button>
+                    }
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+<AddingNewUser />
+
+@if (!(AdminResponse?.IsSuccess ?? true))
+{
+    <div>
+        <p>
+            @AdminResponse.Message
+        </p>
+    </div>
+}
