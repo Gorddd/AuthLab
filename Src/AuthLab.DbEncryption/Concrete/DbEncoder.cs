@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AuthLab.DbEncryption.Abstractions;
 
 namespace AuthLab.DbEncryption.Concrete;
 
-public class DbEncoder
+public class DbEncoder : IDbEncoder
 {
-    private string EncryptedDbPath {  get; set; }
-    private string TempDbPath {  get; set; }
+    private string _encryptedDbPath { get; set; }
+    private string _tempDbPath { get; set; }
 
     public DbEncoder(string encryptedDbPath, string tempDbPath)
     {
-        EncryptedDbPath = encryptedDbPath;
-        TempDbPath = tempDbPath;
+        _encryptedDbPath = encryptedDbPath;
+        _tempDbPath = tempDbPath;
     }
 
     public bool DecryptDatabase(string password)
     {
         try
         {
-            MD2FileEncoder.DecryptFile(EncryptedDbPath, TempDbPath, password);
+            MD2FileEncoder.DecryptFile(_encryptedDbPath, _tempDbPath, password);
         }
         catch
         {
-            File.Delete(TempDbPath);
+            File.Delete(_tempDbPath);
             return false;
         }
         return true;
@@ -36,7 +32,7 @@ public class DbEncoder
         if (string.IsNullOrEmpty(password))
             return false;
 
-        MD2FileEncoder.EncryptFile(TempDbPath, EncryptedDbPath, password);
+        MD2FileEncoder.EncryptFile(_tempDbPath, _encryptedDbPath, password);
         return true;
     }
 }

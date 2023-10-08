@@ -5,9 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using AuthLab.Host.Authentication;
+using AuthLab.DbAuthorization;
+using System.Windows;
+using System.Windows.Threading;
+using static AuthLab.Host.Application.DbAuthorization;
 
 var builder = WebApplication.CreateBuilder(args);
 var appSettings = builder.SetAppSettings();
+
+var password = await DbAuthorizationRunner.CreateFormAsync("База данных не создана. Придумайте ключ базы данных");
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -44,3 +50,5 @@ app.MapFallbackToPage("/_Host");
 app.Services.ApplyDbMigration(appSettings);
 
 app.Run();
+
+

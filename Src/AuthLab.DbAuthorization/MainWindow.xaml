@@ -1,0 +1,19 @@
+﻿<Window x:Class="AuthLab.DbAuthorization.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AuthLab.DbAuthorization"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="491" Width="730" MinHeight="491" MinWidth="730">
+    <Grid Margin="180 170">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Name="mainLabel" Grid.Row="0"></Label>
+        <PasswordBox Name="passwordBox" Grid.Row="1"></PasswordBox>
+        <Button Grid.Row="2" Margin="100 5" Content="Submit" Click="Button_Click"/>
+    </Grid>
+</Window>

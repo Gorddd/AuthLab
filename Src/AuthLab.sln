@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthLab.Tests", "AuthLab.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthLab.DbEncryption", "AuthLab.DbEncryption\AuthLab.DbEncryption.csproj", "{AD34DF32-D7C9-4F3E-B7F2-BC757B2578BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthLab.DbAuthorization", "AuthLab.DbAuthorization\AuthLab.DbAuthorization.csproj", "{8F73760E-13F8-4AF1-A91B-BEAE9D9F8561}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{AD34DF32-D7C9-4F3E-B7F2-BC757B2578BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD34DF32-D7C9-4F3E-B7F2-BC757B2578BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD34DF32-D7C9-4F3E-B7F2-BC757B2578BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F73760E-13F8-4AF1-A91B-BEAE9D9F8561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F73760E-13F8-4AF1-A91B-BEAE9D9F8561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F73760E-13F8-4AF1-A91B-BEAE9D9F8561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F73760E-13F8-4AF1-A91B-BEAE9D9F8561}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

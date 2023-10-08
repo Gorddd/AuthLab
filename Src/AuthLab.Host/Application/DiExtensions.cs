@@ -1,4 +1,6 @@
 ﻿using AuthLab.DataAccess.Implementations;
+using AuthLab.DbEncryption.Abstractions;
+using AuthLab.DbEncryption.Concrete;
 using AuthLab.Domain.Abstractions;
 using AuthLab.Domain.Entities;
 using AuthLab.Security.Implementations;
