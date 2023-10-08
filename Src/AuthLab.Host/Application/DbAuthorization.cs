@@ -1,41 +1,51 @@
 ﻿using AuthLab.DbAuthorization;
+using AuthLab.DbEncryption.Concrete;
 using System.Windows.Threading;
 
 namespace AuthLab.Host.Application;
 
 public class DbAuthorization
 {
-    public string _encryptedDbPath;
-    public string _tempDbPath;
-    public string _password = null!;
+    private DbEncoder _dbEncoder;
+    private string _encryptedDbPath;
+    private string _password = null!;
 
     /// <summary>
-    /// 
+    /// Db authorization
     /// </summary>
     /// <param name="encryptedDbPath">Зашифрованная бд, используется только для расшифрования</param>
     /// <param name="tempDbPath">Путь на бд, которая хранится временно, и которая впоследствии (при выходе из проги) будет шифроваться</param>
     public DbAuthorization(string encryptedDbPath, string tempDbPath)
     {
         _encryptedDbPath = encryptedDbPath;
-        _tempDbPath = tempDbPath;
+        _dbEncoder = new DbEncoder(encryptedDbPath, tempDbPath);
     }
 
-    public async Task<bool> DbLogin() //Запуск приложения
+    public async Task DbLogin() //Запуск приложения
     {
         if (EncryptedDbExists(_encryptedDbPath)) // Существует зашифрованная бд, пытаемся расшифровать
         {
-            
+            var enteredPassword = await DbAuthorizationRunner.CreateFormAndGetPasswordAsync("Введите ключ базы данных");
+            while (true) 
+            {
+                if (_dbEncoder.DecryptDatabase(enteredPassword))
+                {
+                    _password = enteredPassword;
+                    DbAuthorizationRunner.CloseWindow();
+                    break;
+                }
+                enteredPassword = await DbAuthorizationRunner.CreateFormAndGetPasswordAsync("Ключ базы данных неверный, введите снова");
+            }
+            return;
         }
         // БД никакой нет, надо создать пароль, потом после выхода из проги зашифровать бд.
-        _password = await DbAuthorizationRunner.CreateFormAsync("База данных не создана. Придумайте ключ базы данных");
+        _password = await DbAuthorizationRunner.CreateFormAndGetPasswordAsync("База данных не создана. Придумайте ключ базы данных");
         DbAuthorizationRunner.CloseWindow();
-
-        return true;
     }
 
     public void DbLogout() //Завершение приложения
     {
-
+        _dbEncoder.EncryptDatabase(_password);
     }
 
     public static bool EncryptedDbExists(string EncryptedDbPath)
@@ -43,23 +53,30 @@ public class DbAuthorization
 
 
 
+    #region WpfRunner
+
     public static class DbAuthorizationRunner
     {
-        static MainWindow mainWindow = null!;
+        static MainWindow? mainWindow = null;
 
         [STAThread]
-        public static async Task<string> CreateFormAsync(string label)
+        public static async Task<string> CreateFormAndGetPasswordAsync(string label)
         {
-            Thread wpfThread = new Thread(() =>
+            if (mainWindow == null)
             {
-                mainWindow = new MainWindow(label);
-                mainWindow.Show();
+                Thread wpfThread = new Thread(() =>
+                {
+                    mainWindow = new MainWindow(label);
+                    mainWindow.Show();
 
-                Dispatcher.Run();
-            });
+                    Dispatcher.Run();
+                });
 
-            wpfThread.SetApartmentState(ApartmentState.STA);
-            wpfThread.Start();
+                wpfThread.SetApartmentState(ApartmentState.STA);
+                wpfThread.Start();
+            }
+            else
+                SetLabel(label);
 
             return await GetPasswordAsync();
         }
@@ -72,7 +89,7 @@ public class DbAuthorization
                 while (true)
                 {
                     Thread.Sleep(1000);
-                    mainWindow.Dispatcher.Invoke(() =>
+                    mainWindow!.Dispatcher.Invoke(() =>
                     {
                         if (mainWindow.HasPasswordEntered)
                         {
@@ -89,16 +106,19 @@ public class DbAuthorization
 
         public static void CloseWindow()
         {
-            mainWindow.Dispatcher.Invoke(mainWindow.Close);
+            mainWindow?.Dispatcher.Invoke(mainWindow.Close);
+            mainWindow = null;
         }
 
         public static void SetLabel(string label)
         {
-            mainWindow.Dispatcher.Invoke(() =>
+            mainWindow?.Dispatcher.Invoke(() =>
             {
                 mainWindow.Label = label;
             });
         }
     }
+
+    #endregion
 }
 
