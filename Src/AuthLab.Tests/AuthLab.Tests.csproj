@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AuthLab.DbEncryption\AuthLab.DbEncryption.csproj" />
     <ProjectReference Include="..\AuthLab.Security\AuthLab.Security.csproj" />
   </ItemGroup>
 

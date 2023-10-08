@@ -1,10 +1,7 @@
 using AuthLab.Host.Data;
 using AuthLab.Host.Application;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using AuthLab.DataAccess.EfCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using AuthLab.Host.Authentication;
